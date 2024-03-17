@@ -14,7 +14,7 @@ function draw() {
 	fill(255);
 	stroke(0);
 	textSize(100);
-	text(, windowWidth / 2, windowHeight / 2);
+	text(currenteverything, windowWidth / 2, windowHeight / 2);
 	
 
 }
