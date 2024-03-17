@@ -8,6 +8,6 @@ function draw() {
 	background(195);
 	fill(255);
 	stroke(0);
-	text(currentdate.getMonth() + 1, 100, 100);
+	text(currentdate.getMonth() + 1, windowWidth / 2, windowHeight / 2);
 
 }
