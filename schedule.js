@@ -2,12 +2,19 @@ var currentdate = new Date();
 
 function setup() {
 	createCanvas(windowWidth, windowHeight);
+	var currenteverything = currentdate.getFullYear() + "/" + 
+							(currentdate.getMonth() + 1) + "/" + 
+		                    currentdate.getDay + " " +
+		                    currentdate.getHour + ":" +
+		                    currentdate.getMinute + ":";
 }
 
 function draw() {
 	background(195);
 	fill(255);
 	stroke(0);
-	text(currentdate.getMonth() + 1, windowWidth / 2, windowHeight / 2);
+	textSize(100);
+	text(, windowWidth / 2, windowHeight / 2);
+	
 
 }
