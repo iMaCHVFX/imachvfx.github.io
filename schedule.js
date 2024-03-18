@@ -2,50 +2,48 @@ var currentdate = new Date();
 var todaysEvent = "Creating Stream Schedule In Javascript";
 var obj = JSON.parse(`
 {
-"monday":{
-	"event":"First bit: Chess(TBD) Second Half: Mario 64 16 & 70",
+"18":{
+	"events":"First bit: Chess(TBD) Second Half: Mario 64 16 & 70",
 	"month":"3",
-	"day":"18",
+	"day":"monday",
 	"time":"13:00"
 },
-"tuesday":{
-	"event":"Lets Learn C: Writing HTTP Server",
+"19":{
+	"events":"Lets Learn C: Writing HTTP Server",
 	"month":"3",
-	"day":"19",
+	"day":"tuesday",
 	"time":"13:00"
 },
-"wednesday":{
-	"event":"Mario 64",
+"20":{
+	"events":"Mario 64",
 	"month":"3",
-	"day":"20",
+	"day":"wednesday",
 	"time":"TBD"
 },
-"thursday":{
-	"event":"Lets Learn C: Boids in C/Raylib Second Half: Mario",
+"21":{
+	"events":"Lets Learn C: Boids in C/Raylib Second Half: Mario",
 	"month":"3",
-	"day":"21",
+	"day":"thursday",
 	"time":"13:00"
 },
-"friday":{
-	"event":"TTT/Mario 64",
+"22":{
+	"events":"TTT/Mario 64",
 	"month":"3",
-	"day":"22",
+	"day":"friday",
 	"time":"15:00"
 },
-"saturday":{
-	"event":"Mario 64 on a Steering Wheel",
+"23":{
+	"events":"Mario 64 on a Steering Wheel",
 	"month":"3",
-	"day":"23",
+	"day":"saturday",
 	"time":"13:00"
 },
-"sunday":{
-	"event":"Wildcard",
+"24":{
+	"events":"Wildcard",
 	"month":"3",
-	"day":"24",
+	"day":"sunday",
 	"time":"13:00"
 }
-
-
 }
 `);
 
