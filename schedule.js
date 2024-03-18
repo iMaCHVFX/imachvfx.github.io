@@ -1,6 +1,53 @@
 var currentdate = new Date();
 var todaysEvent = "Creating Stream Schedule In Javascript";
-var obj = JSON.parse('{"18":{"events":"plan1","month":"3","day":"monday","time":"13:00"},"19":{"events":"Lets Learn C: Writing HTTP Server","month":"3","day":"tuesday","time":"13:00"},"20":{"events":"N/A","month":"3","day":"wednesday","time":"N/A"},"21":{"events":"temp","month":"3","day":"thursday","time":"13:00"},"22":{"events":"TTT","month":"3","day":"friday","time":"15:00"},"23":{"events":"temp","month":"3","day":"saturday","time":"13:00"},"24":{"events":"temp","month":"3","day":"sunday","time":"13:00"}}');
+var obj = JSON.parse(`
+{
+"monday":{
+	"event":"First bit: Chess(TBD) Second Half: Mario 64 16 & 70",
+	"month":"3",
+	"day":"18",
+	"time":"13:00"
+},
+"tuesday":{
+	"event":"Lets Learn C: Writing HTTP Server",
+	"month":"3",
+	"day":"19",
+	"time":"13:00"
+},
+"wednesday":{
+	"event":"Mario 64",
+	"month":"3",
+	"day":"20",
+	"time":"TBD"
+},
+"thursday":{
+	"event":"Lets Learn C: Boids in C/Raylib Second Half: Mario",
+	"month":"3",
+	"day":"21",
+	"time":"13:00"
+},
+"friday":{
+	"event":"TTT/Mario 64",
+	"month":"3",
+	"day":"22",
+	"time":"15:00"
+},
+"saturday":{
+	"event":"Mario 64 on a Steering Wheel",
+	"month":"3",
+	"day":"23",
+	"time":"13:00"
+},
+"sunday":{
+	"event":"Wildcard",
+	"month":"3",
+	"day":"24",
+	"time":"13:00"
+}
+
+
+}
+`);
 
 var displayDate = currentdate.getFullYear() + "/" + (currentdate.getMonth() + 1) + "/" +
 				  currentdate.getDate() + "\n" +

@@ -1,6 +1,6 @@
 {
 "monday":{
-	"event":"plan1",
+	"event":"First bit: Chess(TBD) Second Half: Mario 64 16 & 70",
 	"month":"3",
 	"day":"18",
 	"time":"13:00"
@@ -12,31 +12,31 @@
 	"time":"13:00"
 },
 "wednesday":{
-	"event":"N/A",
+	"event":"Mario 64",
 	"month":"3",
 	"day":"20",
-	"time":"N/A"
+	"time":"TBD"
 },
 "thursday":{
-	"event":"temp",
+	"event":"Lets Learn C: Boids in C/Raylib Second Half: Mario",
 	"month":"3",
 	"day":"21",
 	"time":"13:00"
 },
 "friday":{
-	"event":"TTT",
+	"event":"TTT/Mario 64",
 	"month":"3",
 	"day":"22",
 	"time":"15:00"
 },
 "saturday":{
-	"event":"temp",
+	"event":"Mario 64 on a Steering Wheel",
 	"month":"3",
 	"day":"23",
 	"time":"13:00"
 },
 "sunday":{
-	"event":"temp",
+	"event":"Wildcard",
 	"month":"3",
 	"day":"24",
 	"time":"13:00"
