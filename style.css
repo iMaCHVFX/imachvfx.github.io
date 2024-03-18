@@ -1,3 +1,19 @@
 body {
-	background-color: #D3D3D3
+	background-color: #D3D3D3;
+}
+
+canvas {
+	position: absolute;
+	z-index: 2;
+	pointer-events: none;
+}
+
+#twitch-embed {
+	position: absolute;
+  	left: 50%;
+	transform: translate(-50%, 0);
+  	width: 40%;
+	z-index: 3;
+	
+	
 }
