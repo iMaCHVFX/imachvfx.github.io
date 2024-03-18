@@ -1,0 +1,46 @@
+{
+"monday":{
+	"event":"plan1",
+	"month":"3",
+	"day":"18",
+	"time":"13:00"
+},
+"tuesday":{
+	"event":"Lets Learn C: Writing HTTP Server",
+	"month":"3",
+	"day":"19",
+	"time":"13:00"
+},
+"wednesday":{
+	"event":"N/A",
+	"month":"3",
+	"day":"20",
+	"time":"N/A"
+},
+"thursday":{
+	"event":"temp",
+	"month":"3",
+	"day":"21",
+	"time":"13:00"
+},
+"friday":{
+	"event":"TTT",
+	"month":"3",
+	"day":"22",
+	"time":"15:00"
+},
+"saturday":{
+	"event":"temp",
+	"month":"3",
+	"day":"23",
+	"time":"13:00"
+},
+"sunday":{
+	"event":"temp",
+	"month":"3",
+	"day":"24",
+	"time":"13:00"
+}
+
+
+}
