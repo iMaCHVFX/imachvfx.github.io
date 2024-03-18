@@ -1,8 +1,7 @@
 # Place Holder Website For Stream Schedule
-- [ ] basic schedule handling
-- [ ] pull schedule from excel sheet
-- [ ] embed of my stream
-- [ ] embed of twitch chat (maybe custom chat style if possible?)
+- [x] basic schedule handling
+- [x] pull schedule from json
+- [x] embed of my stream
 - [ ] poll system for schedule
 	
 
