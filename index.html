@@ -1,34 +1,364 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MnemoType - The Digital Scriptorium</title>
+    
+    <!-- Google Fonts: Crimson Text for that classic academic look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['"Crimson Text"', 'serif'],
+                        sans: ['"Crimson Text"', 'serif'], // Forcing serif everywhere for this theme
+                    },
+                    colors: {
+                        // Custom paper colors
+                        paper: {
+                            light: '#faf9f6',
+                            DEFAULT: '#f4f1ea',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
 
-	<head>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.1/p5.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.1/addons/p5.sound.min.js"></script>
-		<link rel="stylesheet" type="text/css" href="style.css">
-		<meta charset="utf-8" />
-		<title> iMaCH Stream Schedule </title>
-	</head>
-	<body style="background-color:#D3D3D3">
-		<div id="twitch-embed"></div>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        /* Custom selection color to match the theme */
+        ::selection {
+            background-color: #e7e5e4; /* stone-200 */
+            color: #1c1917; /* stone-900 */
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-[#faf9f6] text-stone-800 font-serif antialiased">
 
-		<!-- Load the Twitch embed JavaScript file -->
-		<script src="https://embed.twitch.tv/embed/v1.js"></script>
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-[#faf9f6]/95 border-b-2 border-stone-200 backdrop-blur-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <div class="flex items-center gap-3">
+                    <!-- CHANGED: Reduced left padding to pl-0.5 for a 2px nudge -->
+                    <div class="border-2 border-stone-800 w-12 h-12 flex items-center justify-center rounded-sm shrink-0">
+                        <span class="font-bold text-3xl italic text-stone-900 font-serif leading-none pb-1 pl-0.5">Μη</span>
+                    </div>
+                    <!-- End Change -->
+                    <span class="font-bold text-2xl tracking-tight text-stone-900">MnemoType</span>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-center space-x-12">
+                        <a href="#features" class="text-stone-600 hover:text-red-800 transition-colors px-1 py-2 text-lg italic hover:underline decoration-red-800 underline-offset-4">Features</a>
+                        <a href="#pricing" class="text-stone-600 hover:text-red-800 transition-colors px-1 py-2 text-lg italic hover:underline decoration-red-800 underline-offset-4">Acquisition</a>
+                        <a href="#community" class="text-stone-600 hover:text-red-800 transition-colors px-1 py-2 text-lg italic hover:underline decoration-red-800 underline-offset-4">Community</a>
+                    </div>
+                </div>
 
-		<!-- Create a Twitch.Embed object that will render within the "twitch-embed" element -->
-		<script type="text/javascript">
-		  new Twitch.Embed("twitch-embed", {
-		  //make width and heght based on windowWidth and windowHeight
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="inline-flex items-center justify-center p-2 text-stone-600 hover:text-stone-900 focus:outline-none">
+                        <i data-lucide="menu" id="menu-icon" class="w-6 h-6"></i>
+                        <i data-lucide="x" id="close-icon" class="w-6 h-6 hidden"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
 
-			width: 530,
-			height: 300,
-			channel: "imach",
-			layout: "video",
-			// Only needed if this page is going to be embedded on other websites
-			parent: ["embed.example.com", "othersite.example.com"]
-		  });
-		</script>	
-		<main>
-		</main>	
-		<script src="schedule.js"></script>
-	</body>
+        <!-- Mobile Menu Panel -->
+        <div id="mobile-menu" class="hidden md:hidden bg-[#faf9f6] border-b border-stone-200">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#features" class="block px-3 py-2 text-lg italic text-stone-700 hover:bg-stone-100">Features</a>
+                <a href="#pricing" class="block px-3 py-2 text-lg italic text-stone-700 hover:bg-stone-100">Acquisition</a>
+                <a href="#community" class="block px-3 py-2 text-lg italic text-stone-700 hover:bg-stone-100">Community</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="pt-40 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-b border-stone-200">
+        <div class="text-center max-w-3xl mx-auto">
+            <div class="mb-6 flex justify-center">
+                 <span class="px-3 py-1 border border-stone-300 text-stone-500 text-sm uppercase tracking-widest rounded-sm">
+                   v0.0.1a
+                 </span>
+            </div>
+            <h1 class="text-5xl sm:text-7xl font-bold tracking-tight mb-8 text-stone-900 leading-tight">
+                Type at the <br/>
+                <span class="italic text-stone-600">Speed of Thought</span>
+            </h1>
+            <p class="text-xl sm:text-2xl text-stone-600 mb-12 leading-relaxed max-w-2xl mx-auto font-light">
+                A digital scriptorium for the modern scholar. <br/>
+                
+            </p>
+            <div class="flex flex-col sm:flex-row gap-6 justify-center">
+                <a href="https://gumroad.com/mnemotype" class="group inline-flex items-center justify-center px-8 py-4 bg-red-900 text-stone-50 text-lg hover:bg-red-800 transition-colors duration-300 rounded-sm shadow-md hover:shadow-lg">
+                    Acquire License
+                    <i data-lucide="arrow-right" class="ml-3 w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
+                </a>
+                <a href="#features" class="inline-flex items-center justify-center px-8 py-4 border-2 border-stone-300 text-lg text-stone-700 hover:border-stone-500 hover:text-stone-900 transition-colors rounded-sm bg-transparent">
+                    Consult the Codex
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pricing Section -->
+    <div id="pricing" class="py-24 bg-[#f4f1ea] relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-20">
+                <h2 class="text-4xl font-bold text-stone-900 mb-4">Acquisition & Patronage</h2>
+                <div class="h-1 w-24 bg-red-800 mx-auto mb-6"></div>
+                <p class="text-xl text-stone-600 italic">
+                    Select the arrangement that best suits your scholarly pursuits and support.
+                </p>
+            </div>
+
+            <div class="grid lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+                
+                <!-- Standard / Gumroad - Fixed Price Acquisition -->
+                <div class="bg-[#faf9f6] p-8 border border-stone-300 shadow-sm hover:shadow-xl transition-all duration-300 relative group flex flex-col">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-stone-300 group-hover:bg-stone-500 transition-colors"></div>
+                    <div class="flex-1">
+                        <div class="flex items-center gap-3 mb-4">
+                            <i data-lucide="book-open" class="w-7 h-7 text-stone-700"></i>
+                            <h3 class="text-2xl font-bold text-stone-900">The Standard Edition</h3>
+                        </div>
+                        <p class="text-stone-600 min-h-[3rem] italic border-b border-stone-200 pb-4 mb-6">
+                           A perpetual license for the core manuscript tools.
+                        </p>
+                        <div class="flex items-baseline mb-8">
+                            <span class="text-5xl font-bold text-stone-900">$25</span>
+                            <span class="ml-3 text-stone-500 italic">one-time payment</span>
+                        </div>
+                        
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-start">
+                                <i data-lucide="check" class="w-4 h-4 mt-1 text-stone-400"></i>
+                                <span class="ml-3 text-lg text-stone-700">Perpetual ownership (Gumroad)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i data-lucide="check" class="w-4 h-4 mt-1 text-stone-400"></i>
+                                <span class="ml-3 text-lg text-stone-700"><strong>Major feature updates every 3 months</strong></span>
+                            </li>
+                            <li class="flex items-start">
+                                <i data-lucide="check" class="w-4 h-4 mt-1 text-stone-400"></i>
+                                <span class="ml-3 text-lg text-stone-700"><strong>Immediate critical bug fixes</strong></span>
+                            </li>
+                            <li class="flex items-start">
+                                <i data-lucide="check" class="w-4 h-4 mt-1 text-stone-400"></i>
+                                <span class="ml-3 text-lg text-stone-700">Core manuscript tools and documentation</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i data-lucide="check" class="w-4 h-4 mt-1 text-stone-400"></i>
+                                <span class="ml-3 text-lg text-stone-700">Standard corpus content</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <a href="https://gumroad.com/mnemotype" class="w-full block bg-white border-2 border-stone-800 text-stone-900 font-bold text-center py-3 hover:bg-stone-800 hover:text-white transition-all uppercase tracking-wider text-sm">
+                        Acquire via Gumroad
+                    </a>
+                </div>
+
+                <!-- Patron / Patreon - Subscription Access -->
+                <div class="bg-[#faf9f6] p-8 border-2 border-red-900/20 shadow-lg hover:shadow-xl transition-all duration-300 relative group transform lg:-translate-y-4 flex flex-col">
+                    <div class="absolute top-0 left-0 w-full h-1.5 bg-red-800"></div>
+                    <div class="absolute -top-5 left-1/2 transform -translate-x-1/2 bg-red-800 text-[#faf9f6] px-4 py-1 text-xs uppercase tracking-widest font-bold shadow-sm">
+                        Magister
+                    </div>
+                    
+                    <div class="flex-1">
+                        <div class="flex items-center gap-3 mb-4">
+                            <i data-lucide="zap" class="w-7 h-7 text-red-800"></i>
+                            <h3 class="text-2xl font-bold text-stone-900">The Patron's Circle</h3>
+                        </div>
+                        <p class="text-stone-600 min-h-[3rem] italic border-b border-stone-200 pb-4 mb-6">
+                            For those who wish to support further development and content.
+                        </p>
+                        <div class="flex items-baseline mb-8">
+                            <span class="text-5xl font-bold text-stone-900">$10</span>
+                            <span class="ml-3 text-stone-500 italic">/ month</span>
+                        </div>
+
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-start">
+                                <i data-lucide="check" class="w-4 h-4 mt-1 text-stone-400"></i>
+                                <span class="ml-3 text-lg text-stone-700">All Standard license privileges</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i data-lucide="check" class="w-4 h-4 mt-1 text-red-800"></i>
+                                <span class="ml-3 text-lg text-red-900 font-bold italic">Real-time feature deployments (daily/weekly)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i data-lucide="check" class="w-4 h-4 mt-1 text-stone-400"></i>
+                                <span class="ml-3 text-lg text-stone-700">Cutting-edge manuscripts and tools</span>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="mt-1">
+                                    <i data-lucide="users" class="w-4 h-4 text-red-800"></i>
+                                </div>
+                                <span class="ml-3 text-lg text-stone-700">Inner circle status and direct influence</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i data-lucide="check" class="w-4 h-4 mt-1 text-stone-400"></i>
+                                <span class="ml-3 text-lg text-stone-700">Priority feedback loop</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <a href="https://patreon.com/mnemotype" class="w-full block bg-red-900 text-[#faf9f6] font-bold text-center py-4 hover:bg-red-800 transition-all uppercase tracking-wider text-sm shadow-md">
+                        Support via Patreon
+                    </a>
+                </div>
+
+                 <!-- Institution - Volume Licensing -->
+                 <div class="bg-[#faf9f6] p-8 border border-stone-300 shadow-sm hover:shadow-xl transition-all duration-300 relative group flex flex-col">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-stone-300 group-hover:bg-stone-500 transition-colors"></div>
+                    <div class="flex-1">
+                        <div class="flex items-center gap-3 mb-4">
+                            <i data-lucide="graduation-cap" class="w-7 h-7 text-stone-700"></i>
+                            <h3 class="text-2xl font-bold text-stone-900">The Academy</h3>
+                        </div>
+                        <p class="text-stone-600 min-h-[3rem] italic border-b border-stone-200 pb-4 mb-6">
+                            Comprehensive provisioning for universities and lyceums.
+                        </p>
+                        <div class="flex items-baseline mb-8">
+                            <span class="text-4xl font-bold text-stone-900">Contact</span>
+                            <span class="ml-3 text-stone-500 italic">For Inquiry</span>
+                        </div>
+                        
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-start">
+                                <i data-lucide="check" class="w-4 h-4 mt-1 text-stone-400"></i>
+                                <span class="ml-3 text-lg text-stone-700">Departmental Licenses</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i data-lucide="check" class="w-4 h-4 mt-1 text-stone-400"></i>
+                                <span class="ml-3 text-lg text-stone-700">Fair Pricing For Highschools/Small Programs</span>
+                            </li>
+							<li class="flex items-start">
+                                <i data-lucide="check" class="w-4 h-4 mt-1 text-stone-400"></i>
+                                <span class="ml-3 text-lg text-stone-700">Institution/Program Specific Branding</span>
+                            </li>
+							
+                          
+                        </ul>
+                    </div>
+
+                    <a href="mailto:licensing@mnemotype.study" class="w-full block bg-white border-2 border-stone-400 text-stone-600 font-bold text-center py-3 hover:border-stone-800 hover:text-stone-900 transition-all uppercase tracking-wider text-sm">
+                        Inquire Within
+                    </a>
+                </div>
+            </div>
+
+            <!-- PayPal Donation Section -->
+            <div class="mt-16 text-center pt-8 border-t border-stone-300 max-w-xl mx-auto">
+                <div class="flex items-center justify-center gap-4 mb-4">
+                    <i data-lucide="dollar-sign" class="w-6 h-6 text-green-700"></i>
+                    <h4 class="text-xl font-bold text-stone-900">The Benefactor's Gift</h4>
+                </div>
+                <p class="text-stone-600 mb-6 italic">
+                    A direct contribution to fuel the project's mission of open access for Classics education worldwide.
+                </p>
+                <a href="https://www.paypal.com/paypalme/iMaCHVFX" class="inline-flex items-center justify-center px-10 py-3 bg-green-700 text-[#faf9f6] font-bold text-center hover:bg-green-600 transition-all uppercase tracking-wider text-base rounded-sm shadow-md">
+                    Donate via PayPal
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Feature Grid -->
+    <div id="features" class="py-24 bg-[#faf9f6]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-stone-900 mb-4">The Goals</h2>
+                <div class="h-1 w-16 bg-stone-300 mx-auto"></div>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-12">
+                                <!-- Feature 1 -->
+                <div class="p-8 bg-white border border-stone-200 shadow-sm relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-1 h-full bg-stone-200"></div>
+                  
+                    <h3 class="text-2xl font-bold text-stone-900 mb-3">Variety</h3>
+                    <p class="text-stone-600 italic leading-relaxed">I believe that the more variety you have access to when learning, the more motivation you have to learn.</p>
+                </div>
+                
+                <!-- Feature 2 -->
+                <div class="p-8 bg-white border border-stone-200 shadow-sm relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-1 h-full bg-stone-200"></div>
+                   
+                    <h3 class="text-2xl font-bold text-stone-900 mb-3">Authenticity</h3>
+                    <p class="text-stone-600 italic leading-relaxed">Only authentic texts from the time these languages were spoken, written, and read. Allowing you to learn with context with very little hassle.</p>
+                </div>
+                
+                <!-- Feature 3 -->
+                <div class="p-8 bg-white border border-stone-200 shadow-sm relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-1 h-full bg-stone-200"></div>
+                    
+                    <h3 class="text-2xl font-bold text-stone-900 mb-3">Have Fun</h3>
+                    <p class="text-stone-600 italic leading-relaxed">I wanted a tool that was academically sound, but also was fun, and kept the dopamine flowing. So I took the scoring of one of my favorite Video Games and applied it to ancient greek. expanding to other languages</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="community" class="bg-stone-900 text-stone-400 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center border-b border-stone-800 pb-12 mb-12">
+                <div class="flex items-center gap-3 mb-6 md:mb-0">
+                    <i data-lucide="feather" class="w-6 h-6 text-stone-300"></i>
+                    <span class="font-bold text-2xl text-stone-100 tracking-wider">MnemoType</span>
+                </div>
+                <div class="flex gap-8 text-sm uppercase tracking-widest">
+                    <a href="https://discord.gg/mnemotype" class="hover:text-stone-100 transition-colors">Discord</a>
+                    <a href="https://twitter.com/mnemotype" class="hover:text-stone-100 transition-colors">Twitter</a>
+                </div>
+            </div>
+            <div class="text-center text-stone-500 font-serif italic text-sm">
+                <p>Crafted with care in the digital age.</p>
+                <p class="mt-2">© <span id="year"></span> MnemoType. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Update Year
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Mobile Menu Toggle Logic
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        const menuIcon = document.getElementById('menu-icon');
+        const closeIcon = document.getElementById('close-icon');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+            menuIcon.classList.toggle('hidden');
+            closeIcon.classList.toggle('hidden');
+        });
+    </script>
+</body>
 </html>
