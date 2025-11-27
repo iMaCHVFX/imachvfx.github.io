@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MnemoType - The Digital Scriptorium</title>
     
-    <!-- Google Fonts: Crimson Text for that classic academic look -->
+    <!-- Google Fonts: Crimson Text -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
@@ -20,14 +20,30 @@
                 extend: {
                     fontFamily: {
                         serif: ['"Crimson Text"', 'serif'],
-                        sans: ['"Crimson Text"', 'serif'], // Forcing serif everywhere for this theme
+                        sans: ['"Crimson Text"', 'serif'],
                     },
                     colors: {
-                        // Custom paper colors
-                        paper: {
-                            light: '#faf9f6',
-                            DEFAULT: '#f4f1ea',
+                        wood: {
+                            light: '#8D6E63',
+                            DEFAULT: '#5D4037',
+                            dark: '#3E2723',
+                            darker: '#271c19',
+                        },
+                        gold: {
+                            light: '#FDE68A',
+                            DEFAULT: '#FCD34D',
+                            dark: '#D97706',
+                            muted: '#bf9b30',
+                        },
+                        parchment: {
+                            light: '#f3e5ab',
+                            DEFAULT: '#d4c5a9',
+                            dark: '#8a7b60',
                         }
+                    },
+                    backgroundImage: {
+                        'wood-pattern': "url('https://www.transparenttextures.com/patterns/wood-pattern.png')",
+                        'parchment-texture': "radial-gradient(circle at center, #d4c5a9 0%, #a89f91 100%)",
                     }
                 }
             }
@@ -38,41 +54,136 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     
     <style>
-        /* Custom selection color to match the theme */
+        /* Base styles for the parchment look */
+        body {
+            background-color: #d4c5a9;
+            background-image: 
+                radial-gradient(circle at 50% 50%, rgba(0,0,0,0) 0%, rgba(0,0,0,0.4) 100%),
+                url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.15'/%3E%3C/svg%3E");
+            color: #271c19;
+        }
+
+        /* Custom selection color */
         ::selection {
-            background-color: #e7e5e4; /* stone-200 */
-            color: #1c1917; /* stone-900 */
+            background-color: #5D4037;
+            color: #FCD34D;
+        }
+
+        /* Wood Button Style */
+        .btn-wood {
+            background: linear-gradient(180deg, #5D4037 0%, #3E2723 100%);
+            border: 2px solid #8D6E63;
+            box-shadow: 
+                inset 0 1px 0 rgba(255,255,255,0.2),
+                0 4px 6px rgba(0,0,0,0.5),
+                0 0 0 1px #271c19;
+            color: #e8dcb5;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.9);
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .btn-wood:hover {
+            background: linear-gradient(180deg, #6D4C41 0%, #4E342E 100%);
+            color: #FCD34D; /* Gold on hover */
+            transform: translateY(-1px);
+            box-shadow: 
+                inset 0 1px 0 rgba(255,255,255,0.3),
+                0 6px 8px rgba(0,0,0,0.6),
+                0 0 0 1px #271c19;
+        }
+
+        .btn-wood:active {
+            transform: translateY(1px);
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        /* Green Variation for PayPal */
+        .btn-wood-green {
+            background: linear-gradient(180deg, #15803d 0%, #14532d 100%);
+            border: 2px solid #4ade80;
+            box-shadow: 
+                inset 0 1px 0 rgba(255,255,255,0.2),
+                0 4px 6px rgba(0,0,0,0.5),
+                0 0 0 1px #052e16;
+            color: #f0fdf4;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.9);
+            transition: all 0.2s ease;
+            position: relative;
+        }
+        .btn-wood-green:hover {
+             background: linear-gradient(180deg, #16a34a 0%, #14532d 100%);
+             color: #ffffff;
+             transform: translateY(-1px);
+        }
+
+        /* Gold Text Effect for Titles */
+        .text-gold-gradient {
+            background: linear-gradient(180deg, #FFE082 0%, #FCD34D 40%, #D97706 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.8));
+        }
+
+        /* The Dark Panel look */
+        .wood-panel {
+            background: rgba(30, 20, 15, 0.9);
+            border: 4px double #5D4037;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            color: #d4c5a9;
+            position: relative;
+        }
+        
+        .wood-panel::after {
+            content: '';
+            position: absolute;
+            top: 2px; left: 2px; right: 2px; bottom: 2px;
+            border: 1px solid #8D6E63;
+            pointer-events: none;
+            opacity: 0.5;
+        }
+
+        /* Navbar Wood Texture */
+        .nav-wood {
+            background: linear-gradient(to bottom, #3E2723, #271c19);
+            border-bottom: 2px solid #8D6E63;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.6);
+        }
+
+        /* Smooth Anchor Offsets */
+        html {
+            scroll-padding-top: 6rem;
         }
     </style>
 </head>
-<body class="min-h-screen bg-[#faf9f6] text-stone-800 font-serif antialiased">
+<body class="min-h-screen font-serif antialiased overflow-x-hidden">
 
     <!-- Navigation -->
-    <nav class="fixed w-full z-50 bg-[#faf9f6]/95 border-b-2 border-stone-200 backdrop-blur-sm">
+    <nav class="fixed w-full z-50 nav-wood text-wood-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
                 <!-- Logo -->
                 <div class="flex items-center gap-3">
-                    <!-- CHANGED: Reduced left padding to pl-0.5 for a 2px nudge -->
-                    <div class="border-2 border-stone-800 w-12 h-12 flex items-center justify-center rounded-sm shrink-0">
-                        <span class="font-bold text-3xl italic text-stone-900 font-serif leading-none pb-1 pl-0.5">Μη</span>
+                    <!-- Updated Logo Container with Wood/Gold Theme -->
+                    <div class="border-2 border-gold/40 bg-black/30 w-12 h-12 flex items-center justify-center rounded-sm shrink-0 shadow-inner">
+                        <span class="font-bold text-3xl italic text-gold-gradient font-serif leading-none pb-1 pl-0.5" style="-webkit-text-fill-color: #FCD34D;">Μη</span>
                     </div>
-                    <!-- End Change -->
-                    <span class="font-bold text-2xl tracking-tight text-stone-900">MnemoType</span>
+                    
+                    <span class="font-bold text-2xl tracking-tight text-gold-gradient">MnemoType</span>
                 </div>
                 
                 <!-- Desktop Menu -->
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-center space-x-12">
-                        <a href="#features" class="text-stone-600 hover:text-red-800 transition-colors px-1 py-2 text-lg italic hover:underline decoration-red-800 underline-offset-4">Features</a>
-                        <a href="#pricing" class="text-stone-600 hover:text-red-800 transition-colors px-1 py-2 text-lg italic hover:underline decoration-red-800 underline-offset-4">Acquisition</a>
-                        <a href="#community" class="text-stone-600 hover:text-red-800 transition-colors px-1 py-2 text-lg italic hover:underline decoration-red-800 underline-offset-4">Community</a>
+                        <a href="#features" class="text-parchment hover:text-gold transition-colors px-1 py-2 text-lg italic hover:shadow-[0_1px_0_0_#FCD34D] shadow-none transition-all duration-300">Features</a>
+                        <a href="#pricing" class="text-parchment hover:text-gold transition-colors px-1 py-2 text-lg italic hover:shadow-[0_1px_0_0_#FCD34D] shadow-none transition-all duration-300">Acquisition</a>
+                        <a href="#community" class="text-parchment hover:text-gold transition-colors px-1 py-2 text-lg italic hover:shadow-[0_1px_0_0_#FCD34D] shadow-none transition-all duration-300">Community</a>
                     </div>
                 </div>
 
                 <!-- Mobile Menu Button -->
                 <div class="md:hidden">
-                    <button id="mobile-menu-btn" class="inline-flex items-center justify-center p-2 text-stone-600 hover:text-stone-900 focus:outline-none">
+                    <button id="mobile-menu-btn" class="inline-flex items-center justify-center p-2 text-gold hover:text-white focus:outline-none">
                         <i data-lucide="menu" id="menu-icon" class="w-6 h-6"></i>
                         <i data-lucide="x" id="close-icon" class="w-6 h-6 hidden"></i>
                     </button>
@@ -81,37 +192,36 @@
         </div>
 
         <!-- Mobile Menu Panel -->
-        <div id="mobile-menu" class="hidden md:hidden bg-[#faf9f6] border-b border-stone-200">
+        <div id="mobile-menu" class="hidden md:hidden bg-[#271c19] border-b border-wood-light">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="#features" class="block px-3 py-2 text-lg italic text-stone-700 hover:bg-stone-100">Features</a>
-                <a href="#pricing" class="block px-3 py-2 text-lg italic text-stone-700 hover:bg-stone-100">Acquisition</a>
-                <a href="#community" class="block px-3 py-2 text-lg italic text-stone-700 hover:bg-stone-100">Community</a>
+                <a href="#features" class="block px-3 py-2 text-lg italic text-parchment hover:bg-wood hover:text-gold">Features</a>
+                <a href="#pricing" class="block px-3 py-2 text-lg italic text-parchment hover:bg-wood hover:text-gold">Acquisition</a>
+                <a href="#community" class="block px-3 py-2 text-lg italic text-parchment hover:bg-wood hover:text-gold">Community</a>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <div class="pt-40 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-b border-stone-200">
+    <div class="pt-40 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-b border-wood-dark/20">
         <div class="text-center max-w-3xl mx-auto">
             <div class="mb-6 flex justify-center">
-                 <span class="px-3 py-1 border border-stone-300 text-stone-500 text-sm uppercase tracking-widest rounded-sm">
+                 <span class="px-3 py-1 border border-wood-light/50 text-wood-darker font-bold text-sm uppercase tracking-widest rounded-sm bg-parchment-light/30 shadow-sm">
                    v0.0.1a
                  </span>
             </div>
-            <h1 class="text-5xl sm:text-7xl font-bold tracking-tight mb-8 text-stone-900 leading-tight">
-                Type at the <br/>
-                <span class="italic text-stone-600">Speed of Thought</span>
+            <h1 class="text-5xl sm:text-7xl font-bold tracking-tight mb-8 leading-tight drop-shadow-md">
+                <span class="text-wood-darker">Type at the</span> <br/>
+                <span class="italic text-gold-gradient text-6xl sm:text-8xl" style="text-shadow: 2px 2px 0px #3E2723;">Speed of Thought</span>
             </h1>
-            <p class="text-xl sm:text-2xl text-stone-600 mb-12 leading-relaxed max-w-2xl mx-auto font-light">
+            <p class="text-xl sm:text-2xl text-wood-darker mb-12 leading-relaxed max-w-2xl mx-auto font-light drop-shadow-sm">
                 A digital scriptorium for the modern scholar. <br/>
-                
             </p>
             <div class="flex flex-col sm:flex-row gap-6 justify-center">
-                <a href="https://gumroad.com/mnemotype" class="group inline-flex items-center justify-center px-8 py-4 bg-red-900 text-stone-50 text-lg hover:bg-red-800 transition-colors duration-300 rounded-sm shadow-md hover:shadow-lg">
+                <a href="https://gumroad.com/mnemotype" class="group btn-wood px-8 py-4 text-xl rounded-sm inline-flex items-center justify-center">
                     Acquire License
-                    <i data-lucide="arrow-right" class="ml-3 w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
+                    <i data-lucide="arrow-right" class="ml-3 w-5 h-5 group-hover:translate-x-1 transition-transform text-gold"></i>
                 </a>
-                <a href="#features" class="inline-flex items-center justify-center px-8 py-4 border-2 border-stone-300 text-lg text-stone-700 hover:border-stone-500 hover:text-stone-900 transition-colors rounded-sm bg-transparent">
+                <a href="#features" class="inline-flex items-center justify-center px-8 py-4 border-2 border-wood-dark text-lg text-wood-darker hover:bg-wood-dark hover:text-gold transition-colors rounded-sm bg-transparent font-bold">
                     Consult the Codex
                 </a>
             </div>
@@ -119,164 +229,163 @@
     </div>
 
     <!-- Pricing Section -->
-    <div id="pricing" class="py-24 bg-[#f4f1ea] relative">
+    <div id="pricing" class="py-24 relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="text-center mb-20">
-                <h2 class="text-4xl font-bold text-stone-900 mb-4">Acquisition & Patronage</h2>
-                <div class="h-1 w-24 bg-red-800 mx-auto mb-6"></div>
-                <p class="text-xl text-stone-600 italic">
+                <h2 class="text-4xl font-bold text-gold-gradient mb-4 drop-shadow-md" style="-webkit-text-stroke: 1px #3E2723;">Acquisition & Patronage</h2>
+                <div class="h-1 w-32 bg-gradient-to-r from-transparent via-wood-dark to-transparent mx-auto mb-6"></div>
+                <p class="text-xl text-wood-darker italic font-semibold">
                     Select the arrangement that best suits your scholarly pursuits and support.
                 </p>
             </div>
 
             <div class="grid lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
                 
-                <!-- Standard / Gumroad - Fixed Price Acquisition -->
-                <div class="bg-[#faf9f6] p-8 border border-stone-300 shadow-sm hover:shadow-xl transition-all duration-300 relative group flex flex-col">
-                    <div class="absolute top-0 left-0 w-full h-1 bg-stone-300 group-hover:bg-stone-500 transition-colors"></div>
+                <!-- Standard / Gumroad -->
+                <div class="wood-panel p-8 transition-all duration-300 relative group flex flex-col hover:-translate-y-2">
                     <div class="flex-1">
-                        <div class="flex items-center gap-3 mb-4">
-                            <i data-lucide="book-open" class="w-7 h-7 text-stone-700"></i>
-                            <h3 class="text-2xl font-bold text-stone-900">The Standard Edition</h3>
+                        <div class="flex items-center gap-3 mb-4 border-b border-wood-light/30 pb-4">
+                            <i data-lucide="book-open" class="w-7 h-7 text-gold"></i>
+                            <h3 class="text-2xl font-bold text-parchment-light">The Standard Edition</h3>
                         </div>
-                        <p class="text-stone-600 min-h-[3rem] italic border-b border-stone-200 pb-4 mb-6">
+                        <p class="text-parchment/80 min-h-[3rem] italic mb-6">
                            A perpetual license for the core manuscript tools.
                         </p>
                         <div class="flex items-baseline mb-8">
-                            <span class="text-5xl font-bold text-stone-900">$25</span>
-                            <span class="ml-3 text-stone-500 italic">one-time payment</span>
+                            <span class="text-5xl font-bold text-gold">$25</span>
+                            <span class="ml-3 text-wood-light italic">one-time payment</span>
                         </div>
                         
                         <ul class="space-y-4 mb-8">
                             <li class="flex items-start">
-                                <i data-lucide="check" class="w-4 h-4 mt-1 text-stone-400"></i>
-                                <span class="ml-3 text-lg text-stone-700">Perpetual ownership (Gumroad)</span>
+                                <i data-lucide="check" class="w-4 h-4 mt-1 text-gold"></i>
+                                <span class="ml-3 text-lg text-parchment">Perpetual ownership (Gumroad)</span>
                             </li>
                             <li class="flex items-start">
-                                <i data-lucide="check" class="w-4 h-4 mt-1 text-stone-400"></i>
-                                <span class="ml-3 text-lg text-stone-700"><strong>Major feature updates every 3 months</strong></span>
+                                <i data-lucide="check" class="w-4 h-4 mt-1 text-gold"></i>
+                                <span class="ml-3 text-lg text-parchment"><strong>Major feature updates every 3 months</strong></span>
                             </li>
                             <li class="flex items-start">
-                                <i data-lucide="check" class="w-4 h-4 mt-1 text-stone-400"></i>
-                                <span class="ml-3 text-lg text-stone-700"><strong>Immediate critical bug fixes</strong></span>
+                                <i data-lucide="check" class="w-4 h-4 mt-1 text-gold"></i>
+                                <span class="ml-3 text-lg text-parchment"><strong>Immediate critical bug fixes</strong></span>
                             </li>
                             <li class="flex items-start">
-                                <i data-lucide="check" class="w-4 h-4 mt-1 text-stone-400"></i>
-                                <span class="ml-3 text-lg text-stone-700">Core manuscript tools and documentation</span>
+                                <i data-lucide="check" class="w-4 h-4 mt-1 text-gold"></i>
+                                <span class="ml-3 text-lg text-parchment">Core manuscript tools and documentation</span>
                             </li>
                             <li class="flex items-start">
-                                <i data-lucide="check" class="w-4 h-4 mt-1 text-stone-400"></i>
-                                <span class="ml-3 text-lg text-stone-700">Standard corpus content</span>
+                                <i data-lucide="check" class="w-4 h-4 mt-1 text-gold"></i>
+                                <span class="ml-3 text-lg text-parchment">Standard corpus content</span>
                             </li>
                         </ul>
                     </div>
 
-                    <a href="https://gumroad.com/mnemotype" class="w-full block bg-white border-2 border-stone-800 text-stone-900 font-bold text-center py-3 hover:bg-stone-800 hover:text-white transition-all uppercase tracking-wider text-sm">
+                    <a href="https://gumroad.com/mnemotype" class="w-full block btn-wood text-center py-3 font-bold uppercase tracking-wider text-sm rounded-sm">
                         Acquire via Gumroad
                     </a>
                 </div>
 
-                <!-- Patron / Patreon - Subscription Access -->
-                <div class="bg-[#faf9f6] p-8 border-2 border-red-900/20 shadow-lg hover:shadow-xl transition-all duration-300 relative group transform lg:-translate-y-4 flex flex-col">
-                    <div class="absolute top-0 left-0 w-full h-1.5 bg-red-800"></div>
-                    <div class="absolute -top-5 left-1/2 transform -translate-x-1/2 bg-red-800 text-[#faf9f6] px-4 py-1 text-xs uppercase tracking-widest font-bold shadow-sm">
+                <!-- Patron / Patreon -->
+                <div class="wood-panel p-8 transition-all duration-300 relative group transform lg:-translate-y-4 flex flex-col hover:-translate-y-6 border-gold/50 shadow-[0_0_20px_rgba(252,211,77,0.1)]">
+                    <!-- Ribbon -->
+                    <div class="absolute -top-5 left-1/2 transform -translate-x-1/2 bg-red-900 border border-red-950 text-gold px-6 py-1 text-xs uppercase tracking-widest font-bold shadow-md">
                         Magister
                     </div>
                     
                     <div class="flex-1">
-                        <div class="flex items-center gap-3 mb-4">
-                            <i data-lucide="zap" class="w-7 h-7 text-red-800"></i>
-                            <h3 class="text-2xl font-bold text-stone-900">The Patron's Circle</h3>
+                        <div class="flex items-center gap-3 mb-4 border-b border-wood-light/30 pb-4">
+                            <i data-lucide="zap" class="w-7 h-7 text-red-400"></i>
+                            <h3 class="text-2xl font-bold text-parchment-light">The Patron's Circle</h3>
                         </div>
-                        <p class="text-stone-600 min-h-[3rem] italic border-b border-stone-200 pb-4 mb-6">
+                        <p class="text-parchment/80 min-h-[3rem] italic mb-6">
                             For those who wish to support further development and content.
                         </p>
                         <div class="flex items-baseline mb-8">
-                            <span class="text-5xl font-bold text-stone-900">$10</span>
-                            <span class="ml-3 text-stone-500 italic">/ month</span>
+                            <span class="text-5xl font-bold text-gold">$10</span>
+                            <span class="ml-3 text-wood-light italic">/ month</span>
                         </div>
 
                         <ul class="space-y-4 mb-8">
                             <li class="flex items-start">
-                                <i data-lucide="check" class="w-4 h-4 mt-1 text-stone-400"></i>
-                                <span class="ml-3 text-lg text-stone-700">All Standard license privileges</span>
+                                <i data-lucide="check" class="w-4 h-4 mt-1 text-wood-light"></i>
+                                <span class="ml-3 text-lg text-parchment">All Standard license privileges</span>
                             </li>
                             <li class="flex items-start">
-                                <i data-lucide="check" class="w-4 h-4 mt-1 text-red-800"></i>
-                                <span class="ml-3 text-lg text-red-900 font-bold italic">Real-time feature deployments (daily/weekly)</span>
+                                <i data-lucide="check" class="w-4 h-4 mt-1 text-red-400"></i>
+                                <span class="ml-3 text-lg text-red-300 font-bold italic">Real-time feature deployments (daily/weekly)</span>
                             </li>
                             <li class="flex items-start">
-                                <i data-lucide="check" class="w-4 h-4 mt-1 text-stone-400"></i>
-                                <span class="ml-3 text-lg text-stone-700">Cutting-edge manuscripts and tools</span>
+                                <i data-lucide="check" class="w-4 h-4 mt-1 text-wood-light"></i>
+                                <span class="ml-3 text-lg text-parchment">Cutting-edge manuscripts and tools</span>
                             </li>
                             <li class="flex items-start">
                                 <div class="mt-1">
-                                    <i data-lucide="users" class="w-4 h-4 text-red-800"></i>
+                                    <i data-lucide="users" class="w-4 h-4 text-red-400"></i>
                                 </div>
-                                <span class="ml-3 text-lg text-stone-700">Inner circle status and direct influence</span>
+                                <span class="ml-3 text-lg text-parchment">Inner circle status and direct influence</span>
                             </li>
                             <li class="flex items-start">
-                                <i data-lucide="check" class="w-4 h-4 mt-1 text-stone-400"></i>
-                                <span class="ml-3 text-lg text-stone-700">Priority feedback loop</span>
+                                <i data-lucide="check" class="w-4 h-4 mt-1 text-wood-light"></i>
+                                <span class="ml-3 text-lg text-parchment">Priority feedback loop</span>
                             </li>
                         </ul>
                     </div>
 
-                    <a href="https://patreon.com/mnemotype" class="w-full block bg-red-900 text-[#faf9f6] font-bold text-center py-4 hover:bg-red-800 transition-all uppercase tracking-wider text-sm shadow-md">
+                    <a href="https://patreon.com/mnemotype" class="w-full block bg-red-900 border-2 border-red-950 text-gold font-bold text-center py-4 hover:bg-red-800 transition-all uppercase tracking-wider text-sm shadow-md rounded-sm">
                         Support via Patreon
                     </a>
                 </div>
 
-                 <!-- Institution - Volume Licensing -->
-                 <div class="bg-[#faf9f6] p-8 border border-stone-300 shadow-sm hover:shadow-xl transition-all duration-300 relative group flex flex-col">
-                    <div class="absolute top-0 left-0 w-full h-1 bg-stone-300 group-hover:bg-stone-500 transition-colors"></div>
+                 <!-- Institution -->
+                 <div class="wood-panel p-8 transition-all duration-300 relative group flex flex-col hover:-translate-y-2">
                     <div class="flex-1">
-                        <div class="flex items-center gap-3 mb-4">
-                            <i data-lucide="graduation-cap" class="w-7 h-7 text-stone-700"></i>
-                            <h3 class="text-2xl font-bold text-stone-900">The Academy</h3>
+                        <div class="flex items-center gap-3 mb-4 border-b border-wood-light/30 pb-4">
+                            <i data-lucide="graduation-cap" class="w-7 h-7 text-gold"></i>
+                            <h3 class="text-2xl font-bold text-parchment-light">The Academy</h3>
                         </div>
-                        <p class="text-stone-600 min-h-[3rem] italic border-b border-stone-200 pb-4 mb-6">
+                        <p class="text-parchment/80 min-h-[3rem] italic mb-6">
                             Comprehensive provisioning for universities and lyceums.
                         </p>
                         <div class="flex items-baseline mb-8">
-                            <span class="text-4xl font-bold text-stone-900">Contact</span>
-                            <span class="ml-3 text-stone-500 italic">For Inquiry</span>
+                            <span class="text-4xl font-bold text-gold">Contact</span>
+                            <span class="ml-3 text-wood-light italic">For Inquiry</span>
                         </div>
                         
                         <ul class="space-y-4 mb-8">
+
                             <li class="flex items-start">
-                                <i data-lucide="check" class="w-4 h-4 mt-1 text-stone-400"></i>
-                                <span class="ml-3 text-lg text-stone-700">Departmental Licenses</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i data-lucide="check" class="w-4 h-4 mt-1 text-stone-400"></i>
-                                <span class="ml-3 text-lg text-stone-700">Fair Pricing For Highschools/Small Programs</span>
+                                <i data-lucide="check" class="w-4 h-4 mt-1 text-gold"></i>
+                                <span class="ml-3 text-lg text-parchment">Departmental Licenses</span>
                             </li>
 							<li class="flex items-start">
-                                <i data-lucide="check" class="w-4 h-4 mt-1 text-stone-400"></i>
-                                <span class="ml-3 text-lg text-stone-700">Institution/Program Specific Branding</span>
+                                <i data-lucide="check" class="w-4 h-4 mt-1 text-gold"></i>
+                                <span class="ml-3 text-lg text-parchment">Fair Pricing For Highschools/Small Programs</span>
                             </li>
-							
-                          
+                            <li class="flex items-start">
+                                <i data-lucide="check" class="w-4 h-4 mt-1 text-gold"></i>
+                                <span class="ml-3 text-lg text-parchment">Institution/Program Specific Branding</span>
+                            </li>
                         </ul>
                     </div>
 
-                    <a href="mailto:licensing@mnemotype.study" class="w-full block bg-white border-2 border-stone-400 text-stone-600 font-bold text-center py-3 hover:border-stone-800 hover:text-stone-900 transition-all uppercase tracking-wider text-sm">
+                    <a href="mailto:licensing@mnemotype.study" class="w-full block border-2 border-wood-light text-wood-light hover:text-gold hover:border-gold font-bold text-center py-3 transition-all uppercase tracking-wider text-sm rounded-sm">
                         Inquire Within
                     </a>
                 </div>
+
             </div>
 
-            <!-- PayPal Donation Section -->
-            <div class="mt-16 text-center pt-8 border-t border-stone-300 max-w-xl mx-auto">
+             <!-- PayPal Donation Section (Styled to fit theme) -->
+            <div class="mt-16 text-center pt-8 border-t border-wood-dark/30 max-w-xl mx-auto">
                 <div class="flex items-center justify-center gap-4 mb-4">
-                    <i data-lucide="dollar-sign" class="w-6 h-6 text-green-700"></i>
-                    <h4 class="text-xl font-bold text-stone-900">The Benefactor's Gift</h4>
+                    <i data-lucide="dollar-sign" class="w-6 h-6 text-green-700 drop-shadow-sm"></i>
+                    <h4 class="text-xl font-bold text-wood-darker">The Benefactor's Gift</h4>
                 </div>
-                <p class="text-stone-600 mb-6 italic">
+                <p class="text-wood-darker mb-6 italic font-semibold">
                     A direct contribution to fuel the project's mission of open access for Classics education worldwide.
                 </p>
-                <a href="https://www.paypal.com/paypalme/iMaCHVFX" class="inline-flex items-center justify-center px-10 py-3 bg-green-700 text-[#faf9f6] font-bold text-center hover:bg-green-600 transition-all uppercase tracking-wider text-base rounded-sm shadow-md">
+                <!-- Used a custom wood-green style to keep it consistent but distinct -->
+                <a href="https://www.paypal.com/paypalme/iMaCHVFX" class="inline-flex items-center justify-center px-10 py-3 btn-wood-green font-bold text-center uppercase tracking-wider text-base rounded-sm shadow-md">
                     Donate via PayPal
                 </a>
             </div>
@@ -284,56 +393,56 @@
         </div>
     </div>
 
-    <!-- Feature Grid -->
-    <div id="features" class="py-24 bg-[#faf9f6]">
+    <!-- Features Grid -->
+    <div id="features" class="py-24 bg-black/5 relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold text-stone-900 mb-4">The Goals</h2>
-                <div class="h-1 w-16 bg-stone-300 mx-auto"></div>
+                <h2 class="text-4xl font-bold text-gold-gradient mb-4 drop-shadow-md" style="-webkit-text-stroke: 1px #3E2723;">The Goals</h2>
+                <div class="h-1 w-16 bg-gradient-to-r from-transparent via-wood-dark to-transparent mx-auto"></div>
             </div>
             
             <div class="grid md:grid-cols-3 gap-12">
-                                <!-- Feature 1 -->
-                <div class="p-8 bg-white border border-stone-200 shadow-sm relative overflow-hidden">
-                    <div class="absolute top-0 left-0 w-1 h-full bg-stone-200"></div>
+                <!-- Feature 1 -->
+                <div class="p-8 wood-panel relative overflow-hidden group">
+                    <div class="absolute top-0 left-0 w-1 h-full bg-gold/50 group-hover:bg-gold transition-colors"></div>
                   
-                    <h3 class="text-2xl font-bold text-stone-900 mb-3">Variety</h3>
-                    <p class="text-stone-600 italic leading-relaxed">I believe that the more variety you have access to when learning, the more motivation you have to learn.</p>
+                    <h3 class="text-2xl font-bold text-parchment-light mb-3">Variety</h3>
+                    <p class="text-parchment/70 italic leading-relaxed">I believe that the more variety you have access to when learning, the more motivation you have to learn.</p>
                 </div>
                 
                 <!-- Feature 2 -->
-                <div class="p-8 bg-white border border-stone-200 shadow-sm relative overflow-hidden">
-                    <div class="absolute top-0 left-0 w-1 h-full bg-stone-200"></div>
+                <div class="p-8 wood-panel relative overflow-hidden group">
+                    <div class="absolute top-0 left-0 w-1 h-full bg-gold/50 group-hover:bg-gold transition-colors"></div>
                    
-                    <h3 class="text-2xl font-bold text-stone-900 mb-3">Authenticity</h3>
-                    <p class="text-stone-600 italic leading-relaxed">Only authentic texts from the time these languages were spoken, written, and read. Allowing you to learn with context with very little hassle.</p>
+                    <h3 class="text-2xl font-bold text-parchment-light mb-3">Authenticity</h3>
+                    <p class="text-parchment/70 italic leading-relaxed">Only authentic texts from the time these languages were spoken, written, and read. Allowing you to learn with context with very little hassle.</p>
                 </div>
                 
                 <!-- Feature 3 -->
-                <div class="p-8 bg-white border border-stone-200 shadow-sm relative overflow-hidden">
-                    <div class="absolute top-0 left-0 w-1 h-full bg-stone-200"></div>
+                <div class="p-8 wood-panel relative overflow-hidden group">
+                    <div class="absolute top-0 left-0 w-1 h-full bg-gold/50 group-hover:bg-gold transition-colors"></div>
                     
-                    <h3 class="text-2xl font-bold text-stone-900 mb-3">Have Fun</h3>
-                    <p class="text-stone-600 italic leading-relaxed">I wanted a tool that was academically sound, but also was fun, and kept the dopamine flowing. So I took the scoring of one of my favorite Video Games and applied it to ancient greek. expanding to other languages</p>
+                    <h3 class="text-2xl font-bold text-parchment-light mb-3">Have Fun</h3>
+                    <p class="text-parchment/70 italic leading-relaxed">I wanted a tool that was academically sound, but also was fun, and kept the dopamine flowing. So I took the scoring of one of my favorite Video Games and applied it to ancient greek. expanding to other languages</p>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Footer -->
-    <footer id="community" class="bg-stone-900 text-stone-400 py-16">
+    <footer id="community" class="bg-[#1a120f] text-wood-light py-16 border-t-4 border-wood-dark">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row justify-between items-center border-b border-stone-800 pb-12 mb-12">
+            <div class="flex flex-col md:flex-row justify-between items-center border-b border-wood-dark/50 pb-12 mb-12">
                 <div class="flex items-center gap-3 mb-6 md:mb-0">
-                    <i data-lucide="feather" class="w-6 h-6 text-stone-300"></i>
-                    <span class="font-bold text-2xl text-stone-100 tracking-wider">MnemoType</span>
+                    <i data-lucide="feather" class="w-6 h-6 text-gold"></i>
+                    <span class="font-bold text-2xl text-gold-gradient tracking-wider">MnemoType</span>
                 </div>
                 <div class="flex gap-8 text-sm uppercase tracking-widest">
-                    <a href="https://discord.gg/mnemotype" class="hover:text-stone-100 transition-colors">Discord</a>
-                    <a href="https://twitter.com/mnemotype" class="hover:text-stone-100 transition-colors">Twitter</a>
+                    <a href="https://discord.gg/mnemotype" class="hover:text-gold transition-colors">Discord</a>
+                    <a href="https://twitter.com/mnemotype" class="hover:text-gold transition-colors">Twitter</a>
                 </div>
             </div>
-            <div class="text-center text-stone-500 font-serif italic text-sm">
+            <div class="text-center text-wood-light/60 font-serif italic text-sm">
                 <p>Crafted with care in the digital age.</p>
                 <p class="mt-2">© <span id="year"></span> MnemoType. All rights reserved.</p>
             </div>
