@@ -154,6 +154,12 @@
         html {
             scroll-padding-top: 6rem;
         }
+
+        /* Progress Bar Striped Animation */
+        .progress-striped {
+            background-image: linear-gradient(45deg,rgba(255,255,255,.15) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.15) 50%,rgba(255,255,255,.15) 75%,transparent 75%,transparent);
+            background-size: 1rem 1rem;
+        }
     </style>
 </head>
 <body class="min-h-screen font-serif antialiased overflow-x-hidden">
@@ -204,6 +210,26 @@
     <!-- Hero Section -->
     <div class="pt-40 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-b border-wood-dark/20">
         <div class="text-center max-w-3xl mx-auto">
+            
+            <!-- FUNDRAISING PROGRESS BAR -->
+            <!-- === UPDATE PROGRESS BAR AMOUNT HERE === -->
+            <!-- Change 'data-current' to your current amount -->
+            <div id="fundraising-container" class="mb-12 max-w-md mx-auto" data-current="0" data-target="10000">
+                <div class="flex justify-between items-end mb-2 px-1">
+                    <span class="text-wood-darker font-bold italic">Goal For Open Source</span>
+                    <span class="text-wood-dark font-bold text-sm" id="progress-text">$0 / $10,000</span>
+                </div>
+                <div class="w-full h-6 bg-wood-darker/20 rounded-sm border border-wood-light/50 p-[2px] shadow-inner relative">
+                    <!-- The Bar -->
+                    <div id="progress-fill" class="h-full bg-gradient-to-r from-wood-light via-gold to-gold-dark rounded-sm transition-all duration-1000 ease-out progress-striped shadow-sm relative" style="width: 0%">
+                        <!-- Glow effect at tip -->
+                        <div class="absolute right-0 top-0 bottom-0 w-[2px] bg-white/50 shadow-[0_0_10px_rgba(252,211,77,0.8)]"></div>
+                    </div>
+                </div>
+                <p class="text-xs text-wood-dark/60 mt-1 italic text-right">This directly funds my greek language school dreams</p>
+            </div>
+            <!-- END PROGRESS BAR -->
+
             <div class="mb-6 flex justify-center">
                  <span class="px-3 py-1 border border-wood-light/50 text-wood-darker font-bold text-sm uppercase tracking-widest rounded-sm bg-parchment-light/30 shadow-sm">
                    v0.0.1a
@@ -455,6 +481,28 @@
             menu.classList.toggle('hidden');
             menuIcon.classList.toggle('hidden');
             closeIcon.classList.toggle('hidden');
+        });
+
+        // --- PROGRESS BAR LOGIC ---
+        // Reads the data-attributes from the container and updates the view
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('fundraising-container');
+            if (container) {
+                const current = parseFloat(container.getAttribute('data-current')) || 0;
+                const target = parseFloat(container.getAttribute('data-target')) || 10000;
+                
+                const percentage = Math.min((current / target) * 100, 100);
+                
+                // Update text
+                // Formatting numbers with commas
+                const formatMoney = (n) => "$" + n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                document.getElementById('progress-text').innerText = `${formatMoney(current)} / ${formatMoney(target)}`;
+                
+                // Update bar width (added a small timeout to see the transition if loaded)
+                setTimeout(() => {
+                    document.getElementById('progress-fill').style.width = percentage + "%";
+                }, 100);
+            }
         });
     </script>
 </body>
